@@ -32,6 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Clear Habits"
-        android:id="@+id/button2" android:layout_above="@+id/habitListView"
+        android:id="@+id/deleteTable" android:layout_above="@+id/habitListView"
         android:layout_toRightOf="@+id/submitBtn" android:layout_toEndOf="@+id/submitBtn"/>
 </RelativeLayout>
