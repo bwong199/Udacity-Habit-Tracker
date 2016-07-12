@@ -20,12 +20,6 @@ public class HabitDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        //myDatabase.execSQL("CREATE TABLE IF NOT EXISTS habits (habit VARCHAR, frequency INT(3))");
-
-//        String createTable = "CREATE TABLE " + HabitContract.HabitEntry.TABLE + " ( " +
-//                HabitContract.HabitEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                HabitContract.HabitEntry.COL_TASK_HABIT_NAME + " TEXT NOT NULL);";
-
         String createTable = "CREATE TABLE IF NOT EXISTS " + HabitContract.HabitEntry.TABLE + " (" + HabitContract.HabitEntry.COL_TASK_HABIT_NAME + " VARCHAR, " +                  HabitContract.HabitEntry.COL_TASK_HABIT_FREQ + " INT(3))";
         System.out.println("Create table " + createTable);
         db.execSQL(createTable);
@@ -42,15 +36,11 @@ public class HabitDbHelper extends SQLiteOpenHelper {
     }
 
 
-
     public void deleteHabitsDB() {
         String deleteScript = "delete from " + HabitContract.HabitEntry.TABLE;
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(deleteScript);
-
-
     }
-
 
     public void insert(String habitName){
 
@@ -60,20 +50,16 @@ public class HabitDbHelper extends SQLiteOpenHelper {
         System.out.println("Habit name in DB Helper " + habitName);
 
         ContentValues values = new ContentValues();
-        values.put(HabitContract.HabitEntry.COL_TASK_HABIT_NAME, habitName); // Contact Name
-        values.put(HabitContract.HabitEntry.COL_TASK_HABIT_FREQ, defaultFreq); // Contact Phone Number
-
-        // Inserting Row
-//        db.insert(HabitContract.HabitEntry.TABLE, null, values);
+        values.put(HabitContract.HabitEntry.COL_TASK_HABIT_NAME, habitName);
+        values.put(HabitContract.HabitEntry.COL_TASK_HABIT_FREQ, defaultFreq);
 
         db.insertWithOnConflict(HabitContract.HabitEntry.TABLE,
                 null,
                 values,
                 SQLiteDatabase.CONFLICT_REPLACE);
 
-        db.close(); // Closing database connection
+        db.close();
 
-//        myDatabase.execSQL("INSERT INTO habits (habit, frequency) VALUES (" + "'" + habitName + "'" + " , " + defaultFreq + " )");
     }
 
     public void update(int position){
@@ -94,10 +80,6 @@ public class HabitDbHelper extends SQLiteOpenHelper {
                     System.out.println("Update method " + Integer.toString(c.getInt(frequencyIndex)));
                     int updatedFreq = c.getInt(frequencyIndex) + 1;
                     System.out.println("Updated freq " +  updatedFreq);
-//                    String updateScript = "UPDATE " + HabitContract.HabitEntry.TABLE + " SET " + HabitContract.HabitEntry.COL_TASK_HABIT_FREQ  +" = " + updatedFreq + " WHERE " + HabitContract.HabitEntry.COL_TASK_HABIT_NAME +  " = "  + "'" +  c.getString(habitIndex)  + "'";
-//                    System.out.println(updateScript);
-//                    db.execSQL(updateScript);
-
                     ContentValues values = new ContentValues();
                     values.put(HabitContract.HabitEntry.COL_TASK_HABIT_NAME, c.getString(habitIndex));
                     values.put(HabitContract.HabitEntry.COL_TASK_HABIT_FREQ, updatedFreq);
@@ -106,7 +88,6 @@ public class HabitDbHelper extends SQLiteOpenHelper {
                     db.update(HabitContract.HabitEntry.TABLE, values, HabitContract.HabitEntry.COL_TASK_HABIT_NAME + " = ?",
                             new String[] { String.valueOf(c.getString(habitIndex)) });
 
-//                    System.out.println("UPDATE habits SET" + " frequency = " + updatedFreq + " WHERE habit = "  + "'" +  c.getString(habitIndex)  + "'");
 
                 } while(c.moveToNext());
             }
@@ -123,10 +104,6 @@ public class HabitDbHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
 
             String queryString = "SELECT * FROM habits";
-
-//            myDatabase.execSQL("INSERT INTO habits (habit, frequency) VALUES ('Do homework', 1)");
-//
-//            myDatabase.execSQL("INSERT INTO habits (habit, frequency) VALUES ('Clean car', 1)");
 
             Cursor c = db.rawQuery(queryString, null);
 

@@ -39,13 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         mHelper = new HabitDbHelper(this);
 
-//        myDatabase = this.openOrCreateDatabase("Habits", MODE_PRIVATE, null);
-
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, habitList);
         habitListView.setAdapter(arrayAdapter);
 
         getFromDB();
-
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 mHelper.insert(habitName);
                 getFromDB();
                 arrayAdapter.notifyDataSetChanged();
-
-
             }
         });
 
@@ -67,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 mHelper.deleteHabitsDB();
                 getFromDB();
                 arrayAdapter.notifyDataSetChanged();
-
             }
         });
 
@@ -78,22 +72,17 @@ public class MainActivity extends AppCompatActivity {
                 mHelper.update(position);
 
                 getFromDB();
-
             }
 
 
         });
-
-
     }
 
     private void getFromDB() {
         habitList.clear();
         habitListName.clear();
         try {
-
             mHelper.read();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
